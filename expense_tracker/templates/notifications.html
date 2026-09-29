@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<h1>Notifications</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Type</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for notification in notifications %}
+        <tr>
+            <td>{{ notification.title }}</td>
+            <td>{{ notification.message }}</td>
+            <td>{{ notification.type }}</td>
+            <td>{{ notification.created_at }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">No notifications found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

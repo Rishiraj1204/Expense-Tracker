@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Expense{% endblock %}
+
+{% block content %}
+<div class="card form-card">
+    <h2>Add Expense</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label>Amount</label>
+            <input type="number" step="0.01" name="amount" placeholder="Expense amount" required>
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category_id" title="Select expense category" required>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="description" placeholder="Expense description" required>
+        </div>
+        <div class="form-group">
+            <label>Payment Method</label>
+            <select name="payment_method" title="Select payment method" required>
+                <option>Cash</option>
+                <option>UPI</option>
+                <option>Debit Card</option>
+                <option>Credit Card</option>
+                <option>Bank Transfer</option>
+                <option>Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" name="expense_date" placeholder="Expense date" required>
+        </div>
+        <button class="button primary" type="submit">Save Expense</button>
+    </form>
+</div>
+{% endblock %}

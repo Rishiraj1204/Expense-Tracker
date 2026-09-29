@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="landing-box">
+    <h1>Expense Tracker with Analytics</h1>
+    <p>Manage spending, budgets, income, alerts and insights in one place.</p>
+    <div class="cta-row">
+        <a class="button primary" href="{{ url_for('auth.login') }}">Login</a>
+        <a class="button secondary" href="{{ url_for('auth.register') }}">Register</a>
+    </div>
+</div>
+{% endblock %}

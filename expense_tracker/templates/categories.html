@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+<h1>Categories</h1>
+<div class="card form-card">
+    <h3>Add Category</h3>
+    <form method="POST" action="{{ url_for('categories.add_category') }}">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Category name" required>
+        </div>
+        <div class="form-group">
+            <label>Type</label>
+            <select name="type" title="Select category type">
+                <option>Expense</option>
+                <option>Income</option>
+            </select>
+        </div>
+        <button class="button primary" type="submit">Add Category</button>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.name }}</td>
+            <td>{{ category.type }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="2">No categories found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<div class="stats-grid">
+    <div class="card stat-card">
+        <h3>Total Income</h3>
+        <p>₹{{ '%.2f'|format(total_income) }}</p>
+    </div>
+    <div class="card stat-card">
+        <h3>Total Expenses</h3>
+        <p>₹{{ '%.2f'|format(total_expenses) }}</p>
+    </div>
+    <div class="card stat-card">
+        <h3>Current Balance</h3>
+        <p>₹{{ '%.2f'|format(current_balance) }}</p>
+    </div>
+    <div class="card stat-card">
+        <h3>Remaining Budget</h3>
+        <p>₹{{ '%.2f'|format(remaining_budget) }}</p>
+    </div>
+</div>
+
+<div class="panel-grid">
+    <div class="card">
+        <h3>Recent Transactions</h3>
+        <ul class="list">{% for expense in recent_transactions %}<li>{{ expense.expense_date }} - {{ expense.category.name }} - ₹{{ '%.2f'|format(expense.amount) }}</li>{% else %}<li>No transactions yet.</li>{% endfor %}</ul>
+    </div>
+    <div class="card">
+        <h3>Budget Alerts</h3>
+        <ul class="list">{% if budgets %}{% for item in budgets %}<li>{{ item.category.name if item.category else 'Monthly' }}: {{ '%.2f'|format(item.amount) }}</li>{% endfor %}{% else %}<li>No budgets set.</li>{% endif %}</ul>
+    </div>
+</div>
+
+<div class="card">
+    <h3>Overview</h3>
+    <canvas id="dashboardChart"></canvas>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const chartData = {
+        labels: ['Income', 'Expenses', 'Balance'],
+        values: [{{ total_income }}, {{ total_expenses }}, {{ current_balance }}]
+    };
+
+    const ctx = document.getElementById('dashboardChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'Overview',
+                    data: chartData.values,
+                    backgroundColor: ['#4caf50', '#f44336', '#2196f3']
+                }]
+            },
+            options: { responsive: true }
+        });
+    }
+</script>
+{% endblock %}

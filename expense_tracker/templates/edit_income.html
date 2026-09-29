@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Income{% endblock %}
+
+{% block content %}
+<div class="card form-card">
+    <h2>Edit Income</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label>Source</label>
+            <select name="source" title="Select income source" required>
+                {% for source in ['Salary', 'Freelance', 'Business', 'Scholarship', 'Gift', 'Other'] %}
+                <option value="{{ source }}" {% if income.source == source %}selected{% endif %}>{{ source }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Amount</label>
+            <input type="number" step="0.01" name="amount" value="{{ income.amount }}" placeholder="Income amount" required>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="description" value="{{ income.description }}" placeholder="Income description" required>
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" name="income_date" value="{{ income.income_date }}" placeholder="Income date" required>
+        </div>
+        <button class="button primary" type="submit">Update Income</button>
+    </form>
+</div>
+{% endblock %}

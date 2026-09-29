@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Expense Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="app-layout">
+        {% if session.get('user_id') %}
+        <aside class="sidebar">
+            <h2>Expense Tracker</h2>
+            <nav>
+                <a href="{{ url_for('dashboard.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('expenses.list_expenses') }}">Expenses</a>
+                <a href="{{ url_for('income.list_income') }}">Income</a>
+                <a href="{{ url_for('categories.list_categories') }}">Categories</a>
+                <a href="{{ url_for('budgets.budget_page') }}">Budget</a>
+                <a href="{{ url_for('analytics.analytics_page') }}">Analytics</a>
+                <a href="{{ url_for('notifications.notifications_page') }}">Notifications</a>
+                <a href="{{ url_for('reports.reports_page') }}">Reports</a>
+                <a href="{{ url_for('profile.profile') }}">Profile</a>
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            </nav>
+        </aside>
+        {% endif %}
+        <main class="content{% if not session.get('user_id') %} auth-page{% endif %}">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

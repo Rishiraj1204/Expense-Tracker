@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block content %}
+<h1>Analytics</h1>
+<div class="stats-grid">
+    <div class="card stat-card"><h3>Total Spent</h3><p>₹{{ '%.2f'|format(total_spent) }}</p></div>
+    <div class="card stat-card"><h3>Average Expense</h3><p>₹{{ '%.2f'|format(average_expense) }}</p></div>
+    <div class="card stat-card"><h3>Highest Expense</h3><p>₹{{ '%.2f'|format(highest_expense) }}</p></div>
+    <div class="card stat-card"><h3>Lowest Expense</h3><p>₹{{ '%.2f'|format(lowest_expense) }}</p></div>
+</div>
+
+<div class="card">
+    <h3>Category Totals</h3>
+    <ul class="list">{% for name, amount in category_totals.items() %}<li>{{ name }}: ₹{{ '%.2f'|format(amount) }}</li>{% else %}<li>No category totals found.</li>{% endfor %}</ul>
+</div>
+
+<div class="card">
+    <h3>Top K Expenses</h3>
+    <ul class="list">{% for expense in top_k %}<li>{{ expense.description }} - ₹{{ '%.2f'|format(expense.amount) }}</li>{% else %}<li>No expenses found.</li>{% endfor %}</ul>
+</div>
+
+<div class="card">
+    <h3>Trend Analysis</h3>
+    <ul class="list">{% for item in trend_analysis %}<li>{{ item.period }}: {{ item.trend }} ({{ '%.2f'|format(item.change) }}%)</li>{% else %}<li>No trend data available.</li>{% endfor %}</ul>
+</div>
+
+<div class="card">
+    <h3>Anomalies</h3>
+    <ul class="list">{% for item in anomalies %}<li>{{ item.expense.description }} is higher than expected.</li>{% else %}<li>No anomalies found.</li>{% endfor %}</ul>
+</div>
+
+<div class="card">
+    <h3>Recurring Expenses</h3>
+    <ul class="list">{% for item in recurring %}<li>{{ item.category }} (₹{{ '%.2f'|format(item.amount) }}) repeated {{ item.count }} times.</li>{% else %}<li>No recurring expenses detected.</li>{% endfor %}</ul>
+</div>
+{% endblock %}

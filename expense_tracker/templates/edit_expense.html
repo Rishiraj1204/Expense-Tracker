@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Expense{% endblock %}
+
+{% block content %}
+<div class="card form-card">
+    <h2>Edit Expense</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label>Amount</label>
+            <input type="number" step="0.01" name="amount" value="{{ expense.amount }}" placeholder="Expense amount" required>
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category_id" title="Select expense category" required>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == expense.category_id %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="description" value="{{ expense.description }}" placeholder="Expense description" required>
+        </div>
+        <div class="form-group">
+            <label>Payment Method</label>
+            <select name="payment_method" title="Select payment method" required>
+                {% for method in ['Cash', 'UPI', 'Debit Card', 'Credit Card', 'Bank Transfer', 'Other'] %}
+                <option value="{{ method }}" {% if expense.payment_method == method %}selected{% endif %}>{{ method }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" name="expense_date" value="{{ expense.expense_date }}" placeholder="Expense date" required>
+        </div>
+        <button class="button primary" type="submit">Update Expense</button>
+    </form>
+</div>
+{% endblock %}
